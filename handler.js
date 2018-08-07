@@ -15,7 +15,6 @@ if (mongoose.models.Note) {
   Note = mongoose.model('Note', NoteSchema);
 }
 
-
 module.exports.hello = (event, context, callback) => {
   const response = {
     statusCode: 200,
@@ -54,6 +53,12 @@ module.exports.create = (event, context, callback) => {
     Note.create(JSON.parse(event.body))
     .then(note => callback(null, {
       statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept",
+        "Access-Control-Allow-Origin" : "*", // Required for CORS support to work
+        "Access-Control-Allow-Credentials" : true, // Required for cookies, authorization headers with HTTPS
+        "Access-Control-Allow-Methods" : "GET, POST, OPTIONS, PUT, DELETE"
+      },
       body: JSON.stringify(note)
     }))
     .catch(err => callback(null, {
@@ -72,6 +77,12 @@ module.exports.getOne = (event, context, callback) => {
     Note.findById(event.pathParameters.id)
     .then(note => callback(null, {
       statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept",
+        "Access-Control-Allow-Origin" : "*", // Required for CORS support to work
+        "Access-Control-Allow-Credentials" : true, // Required for cookies, authorization headers with HTTPS
+        "Access-Control-Allow-Methods" : "GET, POST, OPTIONS, PUT, DELETE"
+      },
       body: JSON.stringify(note)
     }))
     .catch(err => callback(null, {
@@ -90,6 +101,12 @@ module.exports.getAll = (event, context, callback) => {
     Note.find()
     .then(note => callback(null, {
       statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept",
+        "Access-Control-Allow-Origin" : "*", // Required for CORS support to work
+        "Access-Control-Allow-Credentials" : true, // Required for cookies, authorization headers with HTTPS
+        "Access-Control-Allow-Methods" : "GET, POST, OPTIONS, PUT, DELETE"
+      },
       body: JSON.stringify(note)
     }))
     .catch(err => callback(null, {
@@ -108,6 +125,12 @@ module.exports.update = (event, context, callback) => {
     Note.findByIdAndUpdate(event.pathParameters.id, JSON.parse(event.body), { new: true })
     .then(note => callback(null, {
       statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept",
+        "Access-Control-Allow-Origin" : "*", // Required for CORS support to work
+        "Access-Control-Allow-Credentials" : true, // Required for cookies, authorization headers with HTTPS
+        "Access-Control-Allow-Methods" : "GET, POST, OPTIONS, PUT, DELETE"
+      },
       body: JSON.stringify(note)
     }))
     .catch(err => callback(null, {
@@ -126,6 +149,12 @@ module.exports.delete = (event, context, callback) => {
     Note.findByIdAndRemove(event.pathParameters.id)
     .then(note => callback(null, {
       statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Headers" : "Origin, X-Requested-With, Content-Type, Accept",
+        "Access-Control-Allow-Origin" : "*", // Required for CORS support to work
+        "Access-Control-Allow-Credentials" : true, // Required for cookies, authorization headers with HTTPS
+        "Access-Control-Allow-Methods" : "GET, POST, OPTIONS, PUT, DELETE, X-Requested-With"
+      },
       body: JSON.stringify({ message: 'Removed note with id: ' + note._id, note: note })
     }))
     .catch(err => callback(null, {
